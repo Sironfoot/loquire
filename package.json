@@ -1,0 +1,30 @@
+{
+    "name": "loquire",
+    "description": "require modules using app root relative paths, e.g. local('/lib/utils') instead of require('../../../lib/utils')",
+    "version": "0.1.0",
+
+    "license": "MIT",
+    "author": "Dominic Pettifer <sironfoot@gmail.com>",
+
+    "keywords": [
+        "require",
+        "module",
+        "local",
+        "relative"
+        "root"
+    ],
+
+    "bugs": {
+        "url": "https://github.com/Sironfoot/loquire/issues"
+    },
+
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha --reporter spec ./test/*"
+    },
+
+    "repository": {
+        "type" : "git",
+        "url" : "git://github.com/Sironfoot/loquire.git"
+    }
+}
