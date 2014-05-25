@@ -1,0 +1,1 @@
+exports.testValue = 10;
