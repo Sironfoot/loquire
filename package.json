@@ -10,7 +10,7 @@
         "require",
         "module",
         "local",
-        "relative"
+        "relative",
         "root"
     ],
 
@@ -20,11 +20,15 @@
 
     "main": "index.js",
     "scripts": {
-        "test": "mocha --reporter spec ./test/*"
+        "test": "node_modules/.bin/mocha --reporter spec ./test/*"
     },
 
     "repository": {
         "type" : "git",
         "url" : "git://github.com/Sironfoot/loquire.git"
+    },
+
+    "devDependencies": {
+        "mocha": "*"
     }
 }
