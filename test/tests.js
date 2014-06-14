@@ -38,6 +38,8 @@ describe('root paths', function() {
 describe('local paths', function() {
     var localFile = local('module');
     var localFolder = local('lib');
+    var localPath = local('lib/index');
+    var localPath2 = local('lib/sub/module');
 
     it('should require a local file (module)', function() {
         assert(localFile);
@@ -47,6 +49,14 @@ describe('local paths', function() {
     it('should require a local folder, loading the default index.js (lib)', function() {
         assert(localFolder);
         assert.equal(localFolder.testValue, 13);
+    });
+    
+    it('should require a local directory path (containing slashes)', function() {
+        assert(localPath);
+        assert.equal(localPath.testValue, 13);
+        
+        assert(localPath2);
+        assert.equal(localPath2.testValue, 12);
     });
 
     // here we identified a problem where the caller module could not be determined
@@ -63,6 +73,16 @@ describe('local paths', function() {
             var module = local('lib');
             assert(module);
             assert.equal(module.testValue, 13);
+        });
+        
+        it('should require a local directory path (containing slashes)', function() {
+            var localPath = local('lib/index');
+            assert(localPath);
+            assert.equal(localPath.testValue, 13);
+            
+            var localPath2 = local('lib/sub/module');
+            assert(localPath2);
+            assert.equal(localPath2.testValue, 12);
         });
     });
 });
