@@ -1,9 +1,10 @@
-var assert = require('assert');
-
 var loquire = require('..');
 global.local = loquire({ rootDir: __dirname });
 
-describe('root paths', function() {
+var assert = require('assert');
+var path = require('path');
+
+describe('local paths', function() {
     it('should require a module at root (/module)', function() {
         var module = local('/module');
 
@@ -31,58 +32,37 @@ describe('root paths', function() {
         assert(module);
         assert.equal(module.testValue, 13);
     });
-});
-
-
-
-describe('local paths', function() {
-    var localFile = local('module');
-    var localFolder = local('lib');
-    var localPath = local('lib/index');
-    var localPath2 = local('lib/sub/module');
-
-    it('should require a local file (module)', function() {
-        assert(localFile);
-        assert.equal(localFile.testValue, 10);
-    });
-
-    it('should require a local folder, loading the default index.js (lib)', function() {
-        assert(localFolder);
-        assert.equal(localFolder.testValue, 13);
+    
+    it('should throw an Error when first forward slash is missing', function() {
+        assert.throws(
+            function() {
+                var module = local('module');
+            },
+            Error
+        );
     });
     
-    it('should require a local directory path (containing slashes)', function() {
-        assert(localPath);
-        assert.equal(localPath.testValue, 13);
+    it('should throw an Error with invalid/missing module that is identical to native require function', function() {
+        var requireError = null;
+        var loquireError = null;
         
-        assert(localPath2);
-        assert.equal(localPath2.testValue, 12);
-    });
-
-    // here we identified a problem where the caller module could not be determined
-    // if the local-require was called from within an executing function
-    describe('called from executing function', function() {
-
-        it('should require a local file (module)', function() {
-            var module = local('module');
-            assert(module);
-            assert.equal(module.testValue, 10);
-        });
-
-        it('should require a local folder (lib)', function() {
-            var module = local('lib');
-            assert(module);
-            assert.equal(module.testValue, 13);
-        });
+        var fullpath = path.join(__dirname, 'nonsense')
         
-        it('should require a local directory path (containing slashes)', function() {
-            var localPath = local('lib/index');
-            assert(localPath);
-            assert.equal(localPath.testValue, 13);
-            
-            var localPath2 = local('lib/sub/module');
-            assert(localPath2);
-            assert.equal(localPath2.testValue, 12);
-        });
+        try {
+            require(fullpath);
+        }
+        catch(err) {
+            requireError = err;
+        }
+        
+        try {
+            local('/nonsense');
+        }
+        catch(err) {
+            loquireError = err;
+        }
+        
+        assert.equal(requireError.toString(), loquireError.toString());
+        assert.equal(requireError.code, loquireError.code);
     });
 });

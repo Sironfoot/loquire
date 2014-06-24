@@ -21,11 +21,10 @@ To use in modules:
 var utils = local('/lib/utils');
 ````
 
-App root relative paths start with a forward slash (/lib/utils). If you omit the slash, it will assume it's in the same directory as the executing file, similar to using ````require('./utils')````. The following two lines are equivalent:
+App root relative paths should always start with a forward slash (/lib/utils). If you want to omit the slash to access a module in the same directory, then just use Node's native require function:
 
 ````javascript
 var utils = require('./utils');
-var utils = local('utils');
 ````
 
 ## Run Tests
