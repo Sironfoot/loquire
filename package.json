@@ -1,7 +1,7 @@
 {
     "name": "loquire",
     "description": "require modules using app root relative paths, e.g. local('/lib/utils') instead of require('../../../lib/utils')",
-    "version": "0.1.0",
+    "version": "0.2.0",
 
     "license": "MIT",
     "author": "Dominic Pettifer <sironfoot@gmail.com>",
